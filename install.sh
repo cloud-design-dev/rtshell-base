@@ -1,16 +1,16 @@
 #!/bin/bash
 set -e
 
-# function get_most_recent_matching {
-#   releases=$(curl -H "Authorization: token $GITHUB_TOKEN" --silent "https://api.github.com/repos/$1/releases")
-#   most_recent_matching=$(echo -E $releases | jq -r '.[] | .assets | .[] | select(.browser_download_url | test("'$2'")) | .browser_download_url' | head -n 1)
-#   if [ ! -z "$most_recent_matching" ]; then
-#     echo $most_recent_matching
-#   else
-#     echo "Failed to get $1: $releases"
-#     exit 2
-#   fi
-# }
+function get_most_recent_matching {
+  releases=$(curl -H "Authorization: token $GITHUB_TOKEN" --silent "https://api.github.com/repos/$1/releases")
+  most_recent_matching=$(echo -E $releases | jq -r '.[] | .assets | .[] | select(.browser_download_url | test("'$2'")) | .browser_download_url' | head -n 1)
+  if [ ! -z "$most_recent_matching" ]; then
+    echo $most_recent_matching
+  else
+    echo "Failed to get $1: $releases"
+    exit 2
+  fi
+}
 
 echo ">> Installing dependencies..."
 apt-get -qq update
