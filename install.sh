@@ -1,16 +1,16 @@
 #!/bin/bash
 set -e
 
-function get_most_recent_matching {
-  releases=$(curl -H "Authorization: token $GITHUB_TOKEN" --silent "https://api.github.com/repos/$1/releases")
-  most_recent_matching=$(echo -E $releases | jq -r '.[] | .assets | .[] | select(.browser_download_url | test("'$2'")) | .browser_download_url' | head -n 1)
-  if [ ! -z "$most_recent_matching" ]; then
-    echo $most_recent_matching
-  else
-    echo "Failed to get $1: $releases"
-    exit 2
-  fi
-}
+# function get_most_recent_matching {
+#   releases=$(curl -H "Authorization: token $GITHUB_TOKEN" --silent "https://api.github.com/repos/$1/releases")
+#   most_recent_matching=$(echo -E $releases | jq -r '.[] | .assets | .[] | select(.browser_download_url | test("'$2'")) | .browser_download_url' | head -n 1)
+#   if [ ! -z "$most_recent_matching" ]; then
+#     echo $most_recent_matching
+#   else
+#     echo "Failed to get $1: $releases"
+#     exit 2
+#   fi
+# }
 
 echo ">> Installing dependencies..."
 apt-get -qq update
@@ -66,12 +66,6 @@ apt-get -qq -y install docker-ce docker-ce-cli containerd.io
 
 echo ">> TFSwitch"
 curl -L https://raw.githubusercontent.com/warrensbox/terraform-switcher/release/install.sh | bash
-
-echo ">> terraform-docs"
-curl -LO $(get_most_recent_matching "terraform-docs/terraform-docs" ".*-linux-amd64$")
-mv terraform-docs-*-linux-amd64 terraform-docs
-chmod +x terraform-docs
-mv terraform-docs /usr/local/bin/
 
 echo ">> Blast Radius"
 pip install blastradius
