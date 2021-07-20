@@ -1,16 +1,16 @@
 #!/bin/bash
 set -e
 
-function get_most_recent_matching {
-  releases=$(curl -H "Authorization: token $GITHUB_TOKEN" --silent "https://api.github.com/repos/$1/releases")
-  most_recent_matching=$(echo -E $releases | jq -r '.[] | .assets | .[] | select(.browser_download_url | test("'$2'")) | .browser_download_url' | head -n 1)
-  if [ ! -z "$most_recent_matching" ]; then
-    echo $most_recent_matching
-  else
-    echo "Failed to get $1: $releases"
-    exit 2
-  fi
-}
+# function get_most_recent_matching {
+#   releases=$(curl -H "Authorization: token $GITHUB_TOKEN" --silent "https://api.github.com/repos/$1/releases")
+#   most_recent_matching=$(echo -E $releases | jq -r '.[] | .assets | .[] | select(.browser_download_url | test("'$2'")) | .browser_download_url' | head -n 1)
+#   if [ ! -z "$most_recent_matching" ]; then
+#     echo $most_recent_matching
+#   else
+#     echo "Failed to get $1: $releases"
+#     exit 2
+#   fi
+# }
 
 echo ">> Installing dependencies..."
 apt-get -qq update
@@ -74,7 +74,7 @@ chmod +x terraform-docs
 mv terraform-docs /usr/local/bin/
 
 echo ">> Blast Radius"
-pip3 install blastradius
+pip install blastradius
 
 # Ansible
 echo ">> Ansible"
@@ -98,11 +98,11 @@ curl https://raw.githubusercontent.com/scopatz/nanorc/master/install.sh | sh
 
 # Powerline
 echo ">> Powerline"
-pip3 install powerline-shell
+pip install powerline-shell
 
 # yq - jq for yaml
 echo ">> yq"
-pip3 install yq
+pip install yq
 
 # argcomplete
 activate-global-python-argcomplete3
