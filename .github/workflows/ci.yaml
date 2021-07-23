@@ -33,5 +33,5 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            ${{ secrets.ICR_NAMESPACE }}/rtshellbase:latest
+            us.icr.io/${{ secrets.ICR_NAMESPACE }}/rtshellbase:latest
   
