@@ -9,9 +9,6 @@ PACKAGES=(
   bash-completion \
   ca-certificates \
   curl \
-  figlet \
-  gettext \
-  graphviz \
   gnupg \
   inetutils-ping \
   jq \
